@@ -12,6 +12,20 @@ module.exports = {
   },
   rules: {
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
-    'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off'
-  }
+    'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
+    "vue/script-indent": ["error", 2, {  // script标签缩进设置
+      "baseIndent": 1,
+      "switchCase": 0,
+      "ignores": [],
+    }],
+    "no-useless-return": 0
+  },
+  overrides: [
+    {
+      "files": ["*.vue"],
+      "rules": {
+        "indent": "off",
+      }
+    }
+  ],
 }
