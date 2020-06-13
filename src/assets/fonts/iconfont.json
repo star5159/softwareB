@@ -1,0 +1,58 @@
+{
+  "id": "1867690",
+  "name": "softwareB",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "15103872",
+      "name": "影像报告",
+      "font_class": "yingxiangbaogao",
+      "unicode": "e639",
+      "unicode_decimal": 58937
+    },
+    {
+      "icon_id": "15103876",
+      "name": "预约实时挂号",
+      "font_class": "yuyueshishiguahao",
+      "unicode": "e63a",
+      "unicode_decimal": 58938
+    },
+    {
+      "icon_id": "15103877",
+      "name": "患者电子档案",
+      "font_class": "huanzhedianzidangan",
+      "unicode": "e63b",
+      "unicode_decimal": 58939
+    },
+    {
+      "icon_id": "15103881",
+      "name": "慢病心电",
+      "font_class": "manbingxindian",
+      "unicode": "e63c",
+      "unicode_decimal": 58940
+    },
+    {
+      "icon_id": "15103885",
+      "name": "在线问诊",
+      "font_class": "zaixianwenzhen",
+      "unicode": "e63d",
+      "unicode_decimal": 58941
+    },
+    {
+      "icon_id": "15103886",
+      "name": "医生",
+      "font_class": "yisheng",
+      "unicode": "e63e",
+      "unicode_decimal": 58942
+    },
+    {
+      "icon_id": "15103889",
+      "name": "问诊体检",
+      "font_class": "wenzhentijian",
+      "unicode": "e63f",
+      "unicode_decimal": 58943
+    }
+  ]
+}
