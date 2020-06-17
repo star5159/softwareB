@@ -22,7 +22,10 @@ const routes = [
       component: Home
     }, {
       path: '/appointment',
-      component: Appointment
+      component: Appointment,
+      meta: {
+        requireAuth: true
+      }
     }, {
       path: '/medical_record',
       component: MedRecord
