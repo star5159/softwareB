@@ -7,7 +7,7 @@ import './assets/fonts/iconfont.css' // icon图标样式表
 import axios from 'axios'
 import lodash from 'lodash'
 
-axios.defaults.baseURL = 'http://localhost:8080/api/' // 配置请求根路径
+axios.defaults.baseURL = 'http://121.199.70.70:8080/api/' // 配置请求根路径
 
 Vue.prototype.$http = axios
 Vue.prototype._ = lodash

@@ -1,5 +1,7 @@
 <template>
-  <div></div>
+  <div>
+    <el-card></el-card>
+  </div>
 </template>
 
 <script>
@@ -11,6 +13,8 @@
   }
 </script>
 
-<style scoped>
-
+<style lang="less" scoped>
+.el-card {
+  height: 500px;
+}
 </style>

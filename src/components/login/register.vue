@@ -3,7 +3,7 @@
     <div class="info">
       <p>请认真填写以下信息进行注册</p>
       <div class="reg-form">
-        <el-form :model="registerForm" :rules="registerRules" ref="registerRef" class="login_info" label-width="120px">
+        <el-form :model="registerForm" :rules="registerRules" ref="registerRef" label-width="120px">
           <!--用户名-->
           <el-form-item prop="patient_user" label="身份证号码">
             <el-input v-model="registerForm.patient_user" @blur="selectDate" clearable></el-input>
@@ -159,7 +159,7 @@
 <style lang="less" scoped>
   .info {
     position: relative;
-    width: 50%;
+    width: 70%;
     height: 100%;
     float: left;
   }

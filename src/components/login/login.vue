@@ -105,13 +105,15 @@
           // console.log(encrypedPwd)
           console.log(this.loginForm)
           if (this.loginForm.identity) {
-            const { data: res } = await this.$http.post('docter/login', loginParameter)
+            const { data: res } = await this.$http.post('doctor/login', loginParameter)
             console.log(res)
             window.sessionStorage.setItem('doctor_token', res.data.token)
+            this.$router.push('doctor')
           } else {
             const { data: res } = await this.$http.post('patient/login', loginParameter)
             console.log(res)
             window.sessionStorage.setItem('patient_token', res.data.token)
+            this.$router.push('home')
           }
         })
       },

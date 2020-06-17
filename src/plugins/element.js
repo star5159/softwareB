@@ -16,7 +16,11 @@ import {
   Container,
   Header,
   Aside,
-  Main
+  Main,
+  Select,
+  Option,
+  Cascader,
+  Card
 } from 'element-ui'
 
 Vue.use(Button)
@@ -35,5 +39,9 @@ Vue.use(Container)
 Vue.use(Header)
 Vue.use(Aside)
 Vue.use(Main)
+Vue.use(Select)
+Vue.use(Option)
+Vue.use(Cascader)
+Vue.use(Card)
 
 Vue.prototype.$message = Message

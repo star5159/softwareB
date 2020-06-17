@@ -1,7 +1,10 @@
 <template>
   <div class="home_background">
     <header class="home_header">
-      <span v-if="login_status">欢迎</span>
+      <span v-if="login_status">
+        <span @click="quit">退出</span>
+        <span>欢迎</span>
+      </span>
       <span v-else @click="login">登录</span>
       <h1>哈工大（深圳）医院</h1>
     </header>
@@ -31,6 +34,10 @@
     },
     created () {
       this.activePath = window.sessionStorage.getItem('activePath')
+      const patientToken = window.sessionStorage.getItem('patient_token')
+      if (patientToken) {
+        this.login_status = true
+      }
     },
     methods: {
       login () {
@@ -39,6 +46,10 @@
       saveNav (index) {
         window.sessionStorage.setItem('activePath', index)
         this.activePath = index
+      },
+      quit () {
+        window.sessionStorage.removeItem('patient_token')
+        this.login_status = false
       }
     }
   }
