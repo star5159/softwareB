@@ -20,7 +20,10 @@ import {
   Select,
   Option,
   Cascader,
-  Card
+  Card,
+  Drawer,
+  Table,
+  TableColumn
 } from 'element-ui'
 
 Vue.use(Button)
@@ -43,5 +46,8 @@ Vue.use(Select)
 Vue.use(Option)
 Vue.use(Cascader)
 Vue.use(Card)
+Vue.use(Drawer)
+Vue.use(Table)
+Vue.use(TableColumn)
 
 Vue.prototype.$message = Message

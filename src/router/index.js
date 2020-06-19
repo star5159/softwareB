@@ -24,11 +24,16 @@ const routes = [
       path: '/appointment',
       component: Appointment,
       meta: {
-        requireAuth: true
+        requireAuth: true,
+        role: 'patient'
       }
     }, {
       path: '/medical_record',
-      component: MedRecord
+      component: MedRecord,
+      meta: {
+        requireAuth: true,
+        role: 'patient'
+      }
     }, {
       path: '/register',
       component: Register
@@ -44,10 +49,18 @@ const routes = [
     redirect: '/personal',
     children: [{
       path: '/personal',
-      component: Personal
+      component: Personal,
+      meta: {
+        requireAuth: true,
+        role: 'doctor'
+      }
     }, {
       path: '/diagnosis',
-      component: Disgnosis
+      component: Disgnosis,
+      meta: {
+        requireAuth: true,
+        role: 'doctor'
+      }
     }]
   }
 ]
@@ -56,12 +69,22 @@ const router = new VueRouter({
   routes
 })
 
-// router.beforeEach((to, from, next) => { // 路由守卫
-//   if (to.path === '/login' || to.path === '/') return next()
-//   const doctorToken = window.sessionStorage.getItem('doctor_token')
-//   const patientToken = window.sessionStorage.getItem('patient_token')
-//   if (!doctorToken) return next('/login')
-//   next()
-// })
+router.beforeEach((to, from, next) => { // 路由守卫
+  const token = window.sessionStorage.getItem('token')
+  const role = window.sessionStorage.getItem('role')
+  if (to.meta.requireAuth) {
+    if (!token) {
+      return next('/login')
+    } else {
+      if (to.meta.role === role) {
+        return next()
+      } else {
+        return next({ path: from.fullPath })
+      }
+    }
+  } else {
+    return next()
+  }
+})
 
 export default router

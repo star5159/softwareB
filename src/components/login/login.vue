@@ -15,8 +15,7 @@
         <el-form :model="loginForm" :rules="loginRules" ref="loginRef" class="login_info">
           <!--用户名-->
           <el-form-item prop="username">
-            <el-input prefix-icon="el-icon-user-solid" v-model="loginForm.username"
-                      @blur="getKey(loginForm.username)"></el-input>
+            <el-input prefix-icon="el-icon-user-solid" v-model="loginForm.username"></el-input>
           </el-form-item>
           <!--密码-->
           <el-form-item prop="password">
@@ -82,37 +81,40 @@
             trigger: 'blur'
           }]
         },
-        RSAKey: {},
+        RSAKey: '',
         imageJpg: require('../../assets/logo.png')
       }
     },
+    created () {
+      this.getKey()
+    },
     methods: {
-      async getKey (username) {
-        const user = { username: username }
-        const { data: res } = await this.$http.get('getRSAKey', { params: user })
-        console.log(res)
-        this.RSAKey.exponent = res.data.exponent
-        this.RSAKey.modulus = res.data.modulus
+      async getKey () {
+        const { data: res } = await this.$http.get('getRSAKey')
+        if (res.meta.status !== 200) return this.$message.error('获取公钥失败')
+        console.log(res.data)
+        this.RSAKey = res.data.publicKey
       },
       login () {
         this.$refs.loginRef.validate(async valid => {
           if (!valid) return
           const loginParameter = this._.cloneDeep(this.loginForm)
           delete loginParameter.identity
-          // const pwdKey = new RSAUtils.getKeyPair(this.RSAKey.exponent, '', this.RSAKey.modulus)
-          // const reversedPwd = this.loginForm.password.split('').reverse().join('')
-          // const encrypedPwd = RSAUtils.encryptedString(pwdKey, reversedPwd)
-          // console.log(encrypedPwd)
-          console.log(this.loginForm)
+          loginParameter.password = this.$encryptedData(this.RSAKey, loginParameter.password)
+          console.log(loginParameter)
           if (this.loginForm.identity) {
             const { data: res } = await this.$http.post('doctor/login', loginParameter)
             console.log(res)
-            window.sessionStorage.setItem('doctor_token', res.data.token)
+            if (res.meta.status !== 200) return this.$message.error('登录失败')
+            window.sessionStorage.setItem('token', res.data.token)
+            window.sessionStorage.setItem('role', 'doctor')
             this.$router.push('doctor')
           } else {
             const { data: res } = await this.$http.post('patient/login', loginParameter)
             console.log(res)
-            window.sessionStorage.setItem('patient_token', res.data.token)
+            if (res.meta.status !== 200) return this.$message.error('登录失败')
+            window.sessionStorage.setItem('token', res.data.token)
+            window.sessionStorage.setItem('role', 'patient')
             this.$router.push('home')
           }
         })

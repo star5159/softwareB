@@ -34,8 +34,9 @@
     },
     created () {
       this.activePath = window.sessionStorage.getItem('activePath')
-      const patientToken = window.sessionStorage.getItem('patient_token')
-      if (patientToken) {
+      const token = window.sessionStorage.getItem('token')
+      const role = window.sessionStorage.getItem('role')
+      if (token && role === 'patient') {
         this.login_status = true
       }
     },

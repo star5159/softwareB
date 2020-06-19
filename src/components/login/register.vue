@@ -144,12 +144,12 @@
         })
       },
       patientReg () {
-        console.log(this.registerForm)
         this.$refs.registerRef.validate(async valid => {
-          console.log(valid)
           if (!valid) return // 如果预验证规则不通过，直接返回
           const { data: res } = await this.$http.post('patient/register', this.registerForm)
-          console.log(res)
+          if (res.meta.status !== 200) return this.$message.error('注册失败')
+          this.$message.success(res.meta.msg)
+          this.$router.push('login')
         })
       }
     }
@@ -179,12 +179,10 @@
     width: 80%;
   }
 
-  /deep/ .radio .el-form-item__content {
-    line-height: 20px;
-  }
-
-  /deep/ .radio .el-form-item__label {
-    line-height: 20px;
+  /deep/ .radio {
+    .el-form-item__content, .el-form-item__label {
+      line-height: 20px;
+    }
   }
 
   .bts {

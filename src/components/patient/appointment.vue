@@ -3,17 +3,27 @@
     <div class="info">
       <p>请填写预约信息</p>
       <el-form :model="appointForm" ref="appointRef" :rules="appointRule" label-width="150px">
+        <el-form-item class="cascader" prop="doctor" label="选择科室">
+          <el-select v-model="appointForm.apartment" placeholder="请选择科室">
+            <el-option v-for="item in apartment" :key="item.value" :label="item.label" :value="item.label"></el-option>
+          </el-select>
+        </el-form-item>
         <el-form-item prop="date" label="预约日期">
-          <el-date-picker v-model="appointForm.date" type="date" placeholder="选择日期"
+          <el-date-picker v-model="appointForm.date" type="date" placeholder="选择日期" :picker-options="pickerOptions"
                           format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd"></el-date-picker>
         </el-form-item>
+        <el-form-item class="cascader" prop="doctor" label="选择医生">
+          <el-select v-model="appointForm.doctor" placeholder="请选择医生" :disabled="disabled">
+            <el-option v-for="item in doctors" :key="item.value" :label="item.label" :value="item.label"></el-option>
+          </el-select>
+        </el-form-item>
         <el-form-item prop="time" label="预约时间段">
-          <el-select v-model="appointForm.time" placeholder="请选择">
+          <el-select v-model="appointForm.time" placeholder="请选择预约时间段" :disabled="disabled">
             <el-option v-for="item in times" :key="item.id" :label="item.value" :value="item.value"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item prop="doctor" label="选择医生">
-          <el-cascader v-model="appointForm.doctor" :options="options" :props="cateProps" ></el-cascader>
+        <el-form-item class="bts">
+          <el-button type="primary" round @click="appoint">预约挂号</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -34,7 +44,8 @@
         appointForm: {
           date: '',
           time: '',
-          doctor: ''
+          doctor: '',
+          apartment: ''
         },
         appointRule: {
           date: [{
@@ -45,58 +56,51 @@
           time: [{
             required: true,
             message: '请选择预约时间段',
-            trigger: 'blur'
+            trigger: ['change', 'blur']
           }],
           doctor: [{
             required: true,
             message: '请选择医生',
-            trigger: 'blur'
+            trigger: ['change', 'blur']
           }]
         },
         times: [{
           id: 0,
-          value: '9:00 - 10:00'
+          value: '上午'
         }, {
           id: 1,
-          value: '10:00 - 11:00'
-        }, {
-          id: 2,
-          value: '11:00 - 12:00'
-        }, {
-          id: 3,
-          value: '12:00 - 113:00'
+          value: '下午'
         }],
-        options: [{
-          value: 1,
-          label: '呼吸科',
-          children: [{
-            value: 2,
-            label: '黄医生'
-          }, {
-            value: 3,
-            label: '宋医生'
-          }]
+        doctors: [{
+          value: 2,
+          label: '黄医生'
         }, {
+          value: 3,
+          label: '宋医生'
+        }],
+        apartment: [{
           value: 4,
-          label: '儿科',
-          children: [{
-            value: 5,
-            label: '李医生'
-          }, {
-            value: 6,
-            label: '陈医生'
-          }, {
-            value: 7,
-            label: '赵医生'
-          }]
+          label: '儿科'
+        }, {
+          value: 5,
+          label: '呼吸科'
         }],
-        cateProps: { // 级联选择器属性
-          expandTrigger: 'hover',
-          label: 'label',
-          value: 'value'
+        disabled: true,
+        pickerOptions: {
+          disabledDate (time) {
+            return time.getTime() < Date.now() - 8.64e7 || Date.now() + 1.123e9 < time.getTime()
+          }
         }
       }
-    }
+    },
+    methods:
+      {
+        appoint () {
+          this.$refs.appointRef.validate(valid => {
+            if (!valid) return
+          })
+        }
+      }
   }
 </script>
 
@@ -120,17 +124,13 @@
 
   .el-form-item {
     margin: 20px 100px 20px 50px;
-    width: 80%;
+    /*width: 80%;*/
   }
 
   .el-divider {
     height: 350px;
     margin: 25px 8px;
     background-color: #6d6d6d;
-  }
-
-  .el-cascader {
-    overflow-x: hidden;
   }
 
   .el-card {
