@@ -8,10 +8,10 @@
         <el-button slot="append" icon="el-icon-search"></el-button>
       </el-input>
       <el-table :data="drugData" :stripe="true">
-        <el-table-column type="index"></el-table-column>
-        <el-table-column prop="name" label="药品名" min-width="100px"></el-table-column>
-        <el-table-column prop="specs" label="药品规格" min-width="100px"></el-table-column>
-        <el-table-column prop="num" label="数量" min-width="150px">
+        <el-table-column type="index" align="center"></el-table-column>
+        <el-table-column prop="name" label="药品名" min-width="100px" align="center"></el-table-column>
+        <el-table-column prop="specs" label="药品规格" min-width="100px" align="center"></el-table-column>
+        <el-table-column prop="num" label="数量" min-width="150px" align="center">
           <template slot-scope="scope">
             <el-input-number v-model="scope.row.num" size="mini"></el-input-number>
           </template>

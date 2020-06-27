@@ -21,12 +21,18 @@ html, body, #app {
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.25) !important;
 }
 
-.el-drawer {
-    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.15) !important;
+.el-table td, th {
+    border: 1px solid rgba(0, 0, 0, 0.2);
 }
 
-.el-table td, .el-table th {
-    text-align: center;
+.el-table--border::after,
+.el-table--group::after,
+.el-table::before {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.el-drawer {
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.15) !important;
 }
 
 .el-tooltip__popper {

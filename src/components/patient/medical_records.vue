@@ -92,11 +92,4 @@
   .el-table--border {
     border: 0.5px solid rgba(0, 0, 0, 0.2);
   }
-
-  /deep/ .el-table {
-    td, th {
-      border: 0.5px solid rgba(0, 0, 0, 0.2);
-      text-align: left;
-    }
-  }
 </style>

@@ -26,7 +26,9 @@ import {
   Table,
   TableColumn,
   Link,
-  Tooltip
+  Tooltip,
+  Row,
+  Col
 } from 'element-ui'
 
 Vue.use(Button)
@@ -55,5 +57,7 @@ Vue.use(Table)
 Vue.use(TableColumn)
 Vue.use(Link)
 Vue.use(Tooltip)
+Vue.use(Row)
+Vue.use(Col)
 
 Vue.prototype.$message = Message
