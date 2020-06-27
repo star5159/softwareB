@@ -6,6 +6,7 @@ import {
   Message,
   Radio,
   Input,
+  InputNumber,
   Menu,
   MenuItem,
   Submenu,
@@ -23,7 +24,9 @@ import {
   Card,
   Drawer,
   Table,
-  TableColumn
+  TableColumn,
+  Link,
+  Tooltip
 } from 'element-ui'
 
 Vue.use(Button)
@@ -31,6 +34,7 @@ Vue.use(Form)
 Vue.use(FormItem)
 Vue.use(Radio)
 Vue.use(Input)
+Vue.use(InputNumber)
 Vue.use(Menu)
 Vue.use(MenuItem)
 Vue.use(Submenu)
@@ -49,5 +53,7 @@ Vue.use(Card)
 Vue.use(Drawer)
 Vue.use(Table)
 Vue.use(TableColumn)
+Vue.use(Link)
+Vue.use(Tooltip)
 
 Vue.prototype.$message = Message

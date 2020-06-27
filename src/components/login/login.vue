@@ -19,7 +19,7 @@
           </el-form-item>
           <!--密码-->
           <el-form-item prop="password">
-            <el-input type="password" prefix-icon="el-icon-lock" v-model="loginForm.password"></el-input>
+            <el-input type="password" prefix-icon="el-icon-lock" v-model="loginForm.password" show-password></el-input>
           </el-form-item>
           <el-form-item class="radio" prop="identity">
             <el-radio v-model="loginForm.identity" :label="true">医生</el-radio>
@@ -37,8 +37,6 @@
 </template>
 
 <script>
-  // import security from '../../assets/js/security.js'
-
   export default {
     name: 'login',
     data () {
@@ -87,6 +85,7 @@
     },
     created () {
       this.getKey()
+      window.sessionStorage.clear()
     },
     methods: {
       async getKey () {
@@ -108,6 +107,7 @@
             if (res.meta.status !== 200) return this.$message.error('登录失败')
             window.sessionStorage.setItem('token', res.data.token)
             window.sessionStorage.setItem('role', 'doctor')
+            window.sessionStorage.setItem('doctor_id', res.doctor_id)
             this.$router.push('doctor')
           } else {
             const { data: res } = await this.$http.post('patient/login', loginParameter)
@@ -115,6 +115,8 @@
             if (res.meta.status !== 200) return this.$message.error('登录失败')
             window.sessionStorage.setItem('token', res.data.token)
             window.sessionStorage.setItem('role', 'patient')
+            window.sessionStorage.setItem('patient_id', res.data.patient_id)
+            window.sessionStorage.setItem('patient_name', res.data.patient_name)
             this.$router.push('home')
           }
         })

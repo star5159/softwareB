@@ -5,7 +5,8 @@ import Login from '../components/login/login.vue'
 import HomePage from '../components/hospital/homepage.vue'
 import Register from '../components/login/register.vue'
 import Appointment from '../components/patient/appointment.vue'
-import MedRecord from '../components/patient/medical_record.vue'
+import MedRecord from '../components/patient/medical_records.vue'
+import DetRecord from '../components/patient/detailed_record.vue'
 import Doctor from '../components/doctor/doctor.vue'
 import Disgnosis from '../components/doctor/diagnosis.vue'
 import Personal from '../components/doctor/personal.vue'
@@ -21,6 +22,9 @@ const routes = [
       path: '/home',
       component: Home
     }, {
+      path: '/register',
+      component: Register
+    }, {
       path: '/appointment',
       component: Appointment,
       meta: {
@@ -35,8 +39,12 @@ const routes = [
         role: 'patient'
       }
     }, {
-      path: '/register',
-      component: Register
+      path: '/detailed_record',
+      component: DetRecord,
+      meta: {
+        requireAuth: true,
+        role: 'patient'
+      }
     }]
   },
   {

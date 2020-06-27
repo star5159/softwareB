@@ -10,10 +10,10 @@
           </el-form-item>
           <!--密码-->
           <el-form-item prop="patient_password" label="密码">
-            <el-input type="password" v-model="registerForm.patient_password" clearable></el-input>
+            <el-input type="password" v-model="registerForm.patient_password" clearable show-password></el-input>
           </el-form-item>
           <el-form-item prop="password" label="密码确认">
-            <el-input type="password" v-model="registerForm.password" @blur="checkPsword" clearable></el-input>
+            <el-input type="password" v-model="registerForm.password" @blur="checkPsword" clearable show-password></el-input>
           </el-form-item>
           <el-form-item prop="patient_name" label="姓名">
             <el-input v-model="registerForm.patient_name" clearable></el-input>
@@ -123,6 +123,10 @@
         }
       }
     },
+    created () {
+      window.sessionStorage.setItem('activePath', '/register')
+      this.getKey()
+    },
     methods: {
       checkPsword () {
         if (this.registerForm.password !== this.registerForm.patient_password) {
@@ -143,11 +147,21 @@
           this.registerForm.birthday = date
         })
       },
+      async getKey () {
+        const { data: res } = await this.$http.get('getRSAKey')
+        if (res.meta.status !== 200) return this.$message.error('获取公钥失败')
+        console.log(res.data)
+        this.RSAKey = res.data.publicKey
+      },
       patientReg () {
         this.$refs.registerRef.validate(async valid => {
           if (!valid) return // 如果预验证规则不通过，直接返回
-          const { data: res } = await this.$http.post('patient/register', this.registerForm)
-          if (res.meta.status !== 200) return this.$message.error('注册失败')
+          const regParameter = this._.cloneDeep(this.registerForm)
+          regParameter.patient_password = this.$encryptedData(this.RSAKey, regParameter.patient_password)
+          console.log(regParameter)
+          const { data: res } = await this.$http.post('patient/register', regParameter)
+          console.log(res)
+          if (res.meta.status !== 201) return this.$message.error('注册失败')
           this.$message.success(res.meta.msg)
           this.$router.push('login')
         })

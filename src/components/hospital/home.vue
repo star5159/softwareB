@@ -32,6 +32,9 @@
           img: require('../../assets/hospital/hospital5.jpg')
         }]
       }
+    },
+    created () {
+      window.sessionStorage.setItem('activePath', '/home')
     }
   }
 </script>

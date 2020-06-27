@@ -8,7 +8,7 @@ import axios from 'axios'
 import lodash from 'lodash'
 import JSEncrypt from 'jsencrypt'
 
-axios.defaults.baseURL = 'http://121.199.70.70:8080/api/' // 配置请求根路径
+axios.defaults.baseURL = 'http://localhost:8080/api/' // 配置请求根路径
 
 Vue.prototype.$http = axios
 Vue.prototype._ = lodash
@@ -17,6 +17,16 @@ Vue.prototype.$encryptedData = function (publicKey, password) { // 加密
   encrypt.setPublicKey(publicKey) // 设置公钥
   return encrypt.encrypt(password)
 }
+
+Vue.filter('conditionFormat', function (condition) {
+  if (!condition) return ''
+  if (condition.length > 50) {
+    return condition.substr(0, 50)
+  } else {
+    return condition
+  }
+})
+
 Vue.config.productionTip = false
 new Vue({
   router,

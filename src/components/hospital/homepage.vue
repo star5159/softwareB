@@ -3,7 +3,7 @@
     <header class="home_header">
       <span v-if="login_status">
         <span @click="quit">退出</span>
-        <span>欢迎</span>
+        <span>欢迎{{patient_name}}</span>
       </span>
       <span v-else @click="login">登录</span>
       <h1>哈工大（深圳）医院</h1>
@@ -29,11 +29,13 @@
     data () {
       return {
         activePath: 'home',
-        login_status: false
+        login_status: false,
+        patient_name: ''
       }
     },
     created () {
       this.activePath = window.sessionStorage.getItem('activePath')
+      this.patient_name = window.sessionStorage.getItem('patient_name')
       const token = window.sessionStorage.getItem('token')
       const role = window.sessionStorage.getItem('role')
       if (token && role === 'patient') {

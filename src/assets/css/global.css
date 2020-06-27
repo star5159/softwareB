@@ -18,9 +18,17 @@ html, body, #app {
 }
 
 .el-card {
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15) !important;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.25) !important;
+}
+
+.el-drawer {
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.15) !important;
 }
 
 .el-table td, .el-table th {
     text-align: center;
+}
+
+.el-tooltip__popper {
+    max-width: 300px;
 }
