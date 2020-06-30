@@ -28,7 +28,11 @@ import {
   Link,
   Tooltip,
   Row,
-  Col
+  Col,
+  Dialog,
+  Pagination,
+  Upload,
+  Tag
 } from 'element-ui'
 
 Vue.use(Button)
@@ -59,5 +63,9 @@ Vue.use(Link)
 Vue.use(Tooltip)
 Vue.use(Row)
 Vue.use(Col)
+Vue.use(Dialog)
+Vue.use(Pagination)
+Vue.use(Upload)
+Vue.use(Tag)
 
 Vue.prototype.$message = Message

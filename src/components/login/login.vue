@@ -26,10 +26,10 @@
             <el-radio v-model="loginForm.identity" :label="false">病人</el-radio>
           </el-form-item>
           <!--按钮-->
-          <el-form-item class="bts">
+          <div class="bts">
             <el-button type="primary" round @click="login">登录</el-button>
             <el-button type="info" round @click="signUp">病人注册</el-button>
-          </el-form-item>
+          </div>
         </el-form>
       </div>
     </div>
@@ -80,7 +80,7 @@
           }]
         },
         RSAKey: '',
-        imageJpg: require('../../assets/logo.png')
+        imageJpg: require('../../assets/image/hospital/login_logo.png')
       }
     },
     created () {
@@ -107,7 +107,7 @@
             if (res.meta.status !== 200) return this.$message.error('登录失败')
             window.sessionStorage.setItem('token', res.data.token)
             window.sessionStorage.setItem('role', 'doctor')
-            window.sessionStorage.setItem('doctor_id', res.doctor_id)
+            window.sessionStorage.setItem('doctor_id', res.data.doctor_id)
             this.$router.push('doctor')
           } else {
             const { data: res } = await this.$http.post('patient/login', loginParameter)
@@ -219,11 +219,5 @@
 
   /deep/ .radio .el-form-item__content {
     line-height: 20px;
-  }
-
-  .bts {
-    display: flex;
-    justify-content: center;
-    margin: 15px 0;
   }
 </style>

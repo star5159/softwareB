@@ -1,28 +1,28 @@
 <template>
   <div>
     <el-card>
+      <span @click="return_records">返回</span>
       <div class="medrec_info">
         <el-row :gutter="20">
-          <el-col :span="8"><p>科室：{{medrec.department_name}}</p></el-col>
-          <el-col :span="16"><p>看病日期：{{medrec.attend_date}}</p></el-col>
+          <el-col :span="6"><p>科室：{{medrec.department_name}}</p></el-col>
+          <el-col :span="18"><p>看病日期：{{medrec.attend_date}}</p></el-col>
         </el-row>
         <el-row :gutter="20">
-          <el-col :span="8"><p>医生：{{medrec.doctor_name}}</p></el-col>
+          <el-col :span="6"><p>医生：{{medrec.doctor_name}}</p></el-col>
           <el-col :span="8"><p>医生电话：{{medrec.doctor_mobile}}</p></el-col>
-          <el-col :span="8"><p>医生邮箱：{{medrec.doctor_email}}</p></el-col>
+          <el-col :span="10"><p>医生邮箱：{{medrec.doctor_email}}</p></el-col>
         </el-row>
         <div class="diagnosis">
           <p>病情：{{medrec.condition}}</p>
           <p>医嘱：{{medrec.advice}}</p>
         </div>
       </div>
-      <!--      <div class="table">-->
       <el-table :data="medrec.drug" border stripe>
         <el-table-column type="index"></el-table-column>
         <el-table-column prop="drug_name" label="药品名称" width="150px" align="center"></el-table-column>
         <el-table-column prop="drug_specification" label="药品规格" width="120px" align="center"></el-table-column>
         <el-table-column prop="drug_num" label="药品数量" width="100px" align="center"></el-table-column>
-        <el-table-column prop="drug_effect" label="药品功效" header-align="center">
+        <el-table-column prop="drug_effect" label="药品功效">
           <template slot-scope="scope">
             {{scope.row.drug_effect | conditionFormat}}
             <el-tooltip :content="scope.row.drug_effect" placement="top">
@@ -31,7 +31,6 @@
           </template>
         </el-table-column>
       </el-table>
-      <!--      </div>-->
     </el-card>
   </div>
 </template>
@@ -43,6 +42,7 @@
       return {
         medrec_id: 0,
         medrec: {
+          medrec_id: 0,
           patient_name: 'xxxx',
           attend_date: 'xxxx年xx月xx日',
           department_name: 'xxx',
@@ -83,6 +83,11 @@
       async getMedrec () {
         const { data: res } = await this.$http.get('patient/single-medrec', { params: { medrec_id: this.medrec_id } })
         console.log(res)
+        if (res.meta.status !== 200) return this.$message.error('获取单个病历详情失败')
+        this.medrec = res.data
+      },
+      return_records () {
+        this.$router.push('medical_record')
       }
     }
   }
@@ -115,13 +120,35 @@
     margin: 5px 20px;
   }
 
-  .el-table {
+  /deep/ .el-table {
     width: 90%;
     left: 50%;
     transform: translate(-50%);
+
+    td, th {
+      border: 1px solid rgba(0, 0, 0, 0.2);
+    }
   }
 
   .el-button {
     padding: 2px 5px;
+  }
+
+  .el-table--border::after,
+  .el-table--group::after,
+  .el-table::before {
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+
+  span {
+    float: left;
+    font-size: 20px;
+    text-shadow: 0 0 3px white;
+    color: dodgerblue;
+    margin: 0 15px;
+
+    &:hover {
+      cursor: pointer;
+    }
   }
 </style>

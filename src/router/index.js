@@ -1,10 +1,12 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../components/hospital/home.vue'
+import DocList from '../components/hospital/doctor_list.vue'
 import Login from '../components/login/login.vue'
 import HomePage from '../components/hospital/homepage.vue'
 import Register from '../components/login/register.vue'
 import Appointment from '../components/patient/appointment.vue'
+import MyAppoint from '../components/patient/my_appoint.vue'
 import MedRecord from '../components/patient/medical_records.vue'
 import DetRecord from '../components/patient/detailed_record.vue'
 import Doctor from '../components/doctor/doctor.vue'
@@ -22,11 +24,21 @@ const routes = [
       path: '/home',
       component: Home
     }, {
+      path: '/doctor_list',
+      component: DocList
+    }, {
       path: '/register',
       component: Register
     }, {
       path: '/appointment',
       component: Appointment,
+      meta: {
+        requireAuth: true,
+        role: 'patient'
+      }
+    }, {
+      path: '/my_appoint',
+      component: MyAppoint,
       meta: {
         requireAuth: true,
         role: 'patient'

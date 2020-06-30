@@ -13,7 +13,8 @@
             <el-input type="password" v-model="registerForm.patient_password" clearable show-password></el-input>
           </el-form-item>
           <el-form-item prop="password" label="密码确认">
-            <el-input type="password" v-model="registerForm.password" @blur="checkPsword" clearable show-password></el-input>
+            <el-input type="password" v-model="registerForm.password" @blur="checkPsword" clearable
+                      show-password></el-input>
           </el-form-item>
           <el-form-item prop="patient_name" label="姓名">
             <el-input v-model="registerForm.patient_name" clearable></el-input>
@@ -40,6 +41,16 @@
       </div>
     </div>
     <el-divider direction="vertical"></el-divider>
+    <div class="contact">
+      <h4>联系我们</h4>
+      <div class="team_leader">
+        <img :src="imgList[0].img" alt="二维码">
+      </div>
+      <div class="team_members">
+        <img :src="imgList[1].img" alt="二维码">
+        <img :src="imgList[2].img" alt="二维码">
+      </div>
+    </div>
   </div>
 </template>
 
@@ -120,7 +131,14 @@
             message: '请输入您的住址',
             trigger: 'blur'
           }]
-        }
+        },
+        imgList: [{
+          img: require('../../assets/image/two-dimensional_code/hyw.png')
+        }, {
+          img: require('../../assets/image/two-dimensional_code/dlx.jpg')
+        }, {
+          img: require('../../assets/image/two-dimensional_code/jyj.jpg')
+        }]
       }
     },
     created () {
@@ -173,7 +191,7 @@
 <style lang="less" scoped>
   .info {
     position: relative;
-    width: 70%;
+    width: 60%;
     height: 100%;
     float: left;
   }
@@ -210,5 +228,52 @@
     height: 500px;
     margin: 25px 8px;
     background-color: #6d6d6d;
+  }
+
+  .contact {
+    display: block;
+    float: right;
+    width: 450px;
+    height: 450px;
+    margin: 20px;
+
+    h4 {
+      display: flex;
+      justify-content: center;
+      margin: 5px;
+    }
+
+    .team_leader {
+      display: flex;
+      justify-content: center;
+      height: 45%;
+
+      img {
+        width: 50%;
+        height: auto;
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: cover;
+        border: 1px solid rgba(0, 0, 0, 0.5);
+        margin: 5px;
+      }
+    }
+
+    .team_members {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      height: 45%;
+
+      img {
+        width: 45%;
+        height: auto;
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: cover;
+        border: 1px solid rgba(0, 0, 0, 0.5);
+        margin: 5px;
+      }
+    }
   }
 </style>

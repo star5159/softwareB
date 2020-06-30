@@ -4,11 +4,11 @@
       <p>{{patient_name}}的历史病历</p>
       <el-table :data="records" :stripe="true" border>
         <el-table-column type="index" align="center"></el-table-column>
-        <el-table-column prop="medrec_id" label="病历号" width="80px" align="center"></el-table-column>
+        <el-table-column prop="medrec_id" label="病历号" width="120px" align="center"></el-table-column>
         <el-table-column prop="attend_date" label="看病时间" width="100px" align="center"></el-table-column>
         <el-table-column prop="department_name" label="就诊科室" width="100px" align="center"></el-table-column>
         <el-table-column prop="doctor_name" label="就诊医生" width="100px" align="center"></el-table-column>
-        <el-table-column prop="condition" label="病情" header-align="center">
+        <el-table-column prop="condition" label="病情">
           <template slot-scope="scope">
             {{scope.row.condition | conditionFormat}}
             <el-tooltip :content="scope.row.condition" placement="top">
@@ -59,6 +59,9 @@
         const { data: res } = await this.$http.get('patient/all-medrec', { params: { patient_id: this.patient_id } })
         console.log(res)
         if (res.meta.status !== 200) return this.$message.error('获取病历列表失败')
+        console.log(res.data['. medrec'])
+        this.records = res.data.medrec
+        console.log(this.records)
       },
       router (id) {
         console.log(id)
@@ -81,15 +84,21 @@
     font-weight: bolder;
   }
 
-  .el-table {
+  /deep/ .el-table {
     margin: 10px 0;
+
+    td, th {
+      border: 1px solid rgba(0, 0, 0, 0.25);
+    }
   }
 
   .el-button {
     padding: 2px 5px;
   }
 
-  .el-table--border {
-    border: 0.5px solid rgba(0, 0, 0, 0.2);
+  .el-table--border::after,
+  .el-table--group::after,
+  .el-table::before {
+    background-color: rgba(0, 0, 0, 0.2);
   }
 </style>

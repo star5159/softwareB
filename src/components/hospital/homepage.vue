@@ -11,9 +11,17 @@
     <nav>
       <el-menu background-color="#3c4457" text-color="#fff" active-text-color="dodgerblue" :default-active="activePath"
                mode="horizontal" :router="true" @select="saveNav">
-        <el-menu-item index="/home">医院主页</el-menu-item>
+        <el-submenu index="1">
+          <template slot="title">浏览信息</template>
+          <el-menu-item index="/home">医院主页</el-menu-item>
+          <el-menu-item index="/doctor_list">浏览医生信息</el-menu-item>
+        </el-submenu>
         <el-menu-item index="/register">病人注册</el-menu-item>
-        <el-menu-item index="/appointment">预约挂号</el-menu-item>
+        <el-submenu index="3">
+          <template slot="title">挂号</template>
+          <el-menu-item index="/appointment">预约挂号</el-menu-item>
+          <el-menu-item index="/my_appoint">我的挂号</el-menu-item>
+        </el-submenu>
         <el-menu-item index="/medical_record">历史病历</el-menu-item>
       </el-menu>
     </nav>
@@ -100,6 +108,10 @@
     width: 100%;
     height: 75%;
     position: relative;
+  }
+
+  /deep/ .el-submenu__title {
+    font-size: 20px;
   }
 
   .el-menu-item {

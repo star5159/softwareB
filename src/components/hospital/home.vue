@@ -7,6 +7,9 @@
         </el-carousel-item>
       </el-carousel>
     </div>
+    <div class="foot">
+      <span>联系电话：0775-26038888</span>
+    </div>
   </div>
 </template>
 
@@ -17,19 +20,19 @@
       return {
         imgList: [{
           id: 0,
-          img: require('../../assets/hospital/hospital1.jpg')
+          img: require('../../assets/image/hospital/hospital1.jpg')
         }, {
           id: 1,
-          img: require('../../assets/hospital/hospital2.jpg')
+          img: require('../../assets/image/hospital/hospital2.jpg')
         }, {
           id: 2,
-          img: require('../../assets/hospital/hospital3.jpg')
+          img: require('../../assets/image/hospital/hospital3.jpg')
         }, {
           id: 3,
-          img: require('../../assets/hospital/hospital4.jpg')
+          img: require('../../assets/image/hospital/hospital4.jpg')
         }, {
           id: 4,
-          img: require('../../assets/hospital/hospital5.jpg')
+          img: require('../../assets/image/hospital/hospital5.jpg')
         }]
       }
     },
@@ -51,11 +54,13 @@
     background-color: #969896;
   }
 
-  .el-carousel__item:nth-child(2n) {
-    background-color: #99a9bf;
-  }
-
-  .el-carousel__item:nth-child(2n+1) {
-    background-color: #d3dce6;
+  .foot {
+    position: absolute;
+    height: 18%;
+    width: 100%;
+    background-color: #3944ff;
+    span {
+      color: white;
+    }
   }
 </style>

@@ -38,7 +38,7 @@
       return {
         isCollapse: false,
         activePath: '',
-        logoImg: require('../../assets/hospital/hospital_logo.png')
+        logoImg: require('../../assets/image/hospital/hospital_logo.png')
       }
     },
     created () {
