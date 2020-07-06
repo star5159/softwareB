@@ -42,3 +42,9 @@ html, body, #app {
     justify-content: center;
     margin: 15px 0;
 }
+
+.undefined {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

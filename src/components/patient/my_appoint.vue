@@ -6,16 +6,18 @@
       <el-table-column prop="reg_id" label="挂号流水号"></el-table-column>
       <el-table-column prop="department_name" label="科室名"></el-table-column>
       <el-table-column prop="doctor_name" label="医生名"></el-table-column>
-      <el-table-column prop="reg_time" label="挂号时间"></el-table-column>
+      <el-table-column prop="reg_time" label="挂号时间" min-width="180px"></el-table-column>
       <el-table-column prop="res_date" label="预约日期"></el-table-column>
       <el-table-column prop="period" label="预约时段"></el-table-column>
       <el-table-column prop="serial_num" label="预约排号"></el-table-column>
-      <el-table-column prop="state" label="状态">
-        <el-tag type="info" v-if="regData.state === 1">未到预约时段</el-tag>
-        <el-tag v-else-if="regData.state === 2">等待叫号</el-tag>
-        <el-tag type="warning" v-else-if="regData.state === 3">正在看病</el-tag>
-        <el-tag type="success" v-else-if="regData.state === 4">已看病</el-tag>
-        <el-tag type="danger">未看病</el-tag>
+      <el-table-column prop="state" label="状态" min-width="100px">
+        <template slot-scope="scope">
+        <el-tag type="info" v-if="scope.row.state === 1">未到预约时段</el-tag>
+        <el-tag type="warning" v-else-if="scope.row.state === 2">等待叫号</el-tag>
+        <el-tag v-else-if="scope.row.state === 3">正在看病</el-tag>
+<!--        <el-tag type="success" v-else-if="scope.row.state === 4">已看病</el-tag>-->
+        <el-tag type="danger" v-else>未看病</el-tag>
+        </template>
       </el-table-column>
       <el-table-column prop="amount" label="挂号费"></el-table-column>
     </el-table>
@@ -40,6 +42,7 @@
         const { data: res } = await this.$http.get('patient/reg-list', { params: { patient_id: this.patient_id } })
         console.log(res)
         this.regData = res.data
+        console.log(this.regData)
       }
     }
   }

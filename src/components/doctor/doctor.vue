@@ -3,7 +3,7 @@
     <el-header>
       <div>
         <img :src="logoImg" alt="">
-        <span>电商后台管理系统</span>
+        <span>哈工大（深圳）医院管理系统</span>
       </div>
       <el-button type="info" @click="quit">退出</el-button>
     </el-header>

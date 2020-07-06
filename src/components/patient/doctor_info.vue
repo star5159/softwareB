@@ -10,6 +10,7 @@
                 <p>医生姓名：{{info.doctor_name}}</p>
                 <p>性别：{{info.doctor_gender}}</p>
               </div>
+              <div class="item"><p v-if="info.department_name">科室：{{info.department_name}}</p></div>
               <div class="item">
                 <p>电话：{{info.doctor_mobile}}</p>
                 <p>邮箱：{{info.doctor_email}}</p>
@@ -47,12 +48,6 @@
     height: 100%;
   }
 
-  .undefined {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
   .box {
     display: flex;
     height: 100%;
@@ -64,7 +59,7 @@
     flex: auto;
     order: 1;
     width: 100%;
-    height: 50%;
+    height: 55%;
 
     .information {
       display: flex;
@@ -127,7 +122,7 @@
     flex: auto;
     order: 2;
     width: 100%;
-    height: 50%;
+    height: 45%;
     overflow: auto;
 
     p {

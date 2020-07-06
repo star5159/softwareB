@@ -24,7 +24,7 @@
         <el-form-item prop="period" label="预约时间段">
           <el-select v-model="appointForm.period" placeholder="请选择预约时间段" :disabled="disabled3">
             <el-option v-for="item in times" :key="item.id" :label="item.value" :value="item.value"
-                       :disabled="item.remain > 0"></el-option>
+                       :disabled="item.remain === 0"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item class="bts">
@@ -76,11 +76,11 @@
         times: [{
           id: 0,
           value: '上午',
-          remain: 3
+          remain: 0
         }, {
           id: 1,
           value: '下午',
-          remain: 0
+          remain: 3
         }],
         department: [{
           department_id: 0,
@@ -163,8 +163,9 @@
           if (res.meta.status !== 200) return this.$message.error('获取医生信息失败')
           this.doctor_info = res.data
           this.disabled3 = false
-          this.times[0].remain = res.am_remainder
-          this.times[1].remain = res.pm_remainder
+          this.times[0].remain = res.data.am_remainder
+          this.times[1].remain = res.data.pm_remainder
+          console.log(this.times)
         },
         appoint () {
           this.$refs.appointRef.validate(async valid => {

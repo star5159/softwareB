@@ -1,41 +1,44 @@
 <template>
   <div>
-    <el-card>
-      <el-row :gutter="20">
-        <el-col :span="8"><p>病人姓名：{{patientInfo.patient_name}}</p></el-col>
-        <el-col :span="8"><p>出生日期：{{patientInfo.birthday}}</p></el-col>
-        <el-col :span="8"><p>年龄：{{patientInfo.patient_age}}</p></el-col>
-      </el-row>
-      <el-row :gutter="20">
-        <el-col :span="8"><p>病人性别：{{patientInfo.patient_gender}}</p></el-col>
-        <el-col :span="8"><p>病人住址：{{patientInfo.address}}</p></el-col>
-        <el-col :span="8"><p>挂号流水号：{{patientInfo.reg_id}}</p></el-col>
-      </el-row>
-      <div class="diagnosis">
-        <el-form :model="diagnosisForm" :rules="diagnosisRule" ref="diagnosisRef" label-width="100px">
-          <el-form-item prop="condition" label="病情">
-            <el-input v-model="diagnosisForm.condition" :rows="5" type="textarea" maxlength="150"
-                      show-word-limit></el-input>
-          </el-form-item>
-          <div class="bts">
-            <el-button type="success" @click="prescription">选择药品</el-button>
-          </div>
-          <div class="form">
-            <el-form-item prop="advice" label="医嘱">
-              <el-input v-model="diagnosisForm.advice" :rows="5" type="textarea" maxlength="150"
+    <el-card :class="Object.keys(patientInfo).length === 0 ? 'undefined' : ''">
+      <span v-if="Object.keys(patientInfo).length === 0">暂时没有病人，医生可以稍作休息</span>
+      <div v-else>
+        <el-row :gutter="20">
+          <el-col :span="8"><p>病人姓名：{{patientInfo.patient_name}}</p></el-col>
+          <el-col :span="8"><p>出生日期：{{patientInfo.birthday}}</p></el-col>
+          <el-col :span="8"><p>年龄：{{patientInfo.patient_age}}</p></el-col>
+        </el-row>
+        <el-row :gutter="20">
+          <el-col :span="8"><p>病人性别：{{patientInfo.patient_gender}}</p></el-col>
+          <el-col :span="8"><p>病人住址：{{patientInfo.address}}</p></el-col>
+          <el-col :span="8"><p>挂号流水号：{{patientInfo.reg_id}}</p></el-col>
+        </el-row>
+        <div class="diagnosis">
+          <el-form :model="diagnosisForm" :rules="diagnosisRule" ref="diagnosisRef" label-width="100px">
+            <el-form-item prop="condition" label="病情">
+              <el-input v-model="diagnosisForm.condition" :rows="5" type="textarea" maxlength="150"
                         show-word-limit></el-input>
             </el-form-item>
-          </div>
-          <div class="bts">
-            <el-button type="primary" round @click="addMedical">添加病历</el-button>
-            <el-button type="warning" round @click="patientLate">病人迟到</el-button>
-          </div>
-        </el-form>
+            <div class="bts">
+              <el-button type="success" @click="prescription">选择药品</el-button>
+            </div>
+            <div class="form">
+              <el-form-item prop="advice" label="医嘱">
+                <el-input v-model="diagnosisForm.advice" :rows="5" type="textarea" maxlength="150"
+                          show-word-limit></el-input>
+              </el-form-item>
+            </div>
+            <div class="bts">
+              <el-button type="primary" round @click="addMedical">添加病历</el-button>
+              <el-button type="warning" round @click="patientLate">病人迟到</el-button>
+            </div>
+          </el-form>
+        </div>
       </div>
     </el-card>
-    <el-drawer title="搜索药品" :visible.sync="drawer" :with-header="false" size="'35%'">
+    <el-drawer title="搜索药品" :visible.sync="drawer" :with-header="false" size="'35%'" @close="drawerClose">
       <el-input v-model="drug_page.drug_search" placeholder="请输入内容" style="margin: 5px;">
-        <el-button slot="append" icon="el-icon-search" @click="prescription"></el-button>
+        <el-button slot="append" icon="el-icon-search" @click="drugSearch"></el-button>
       </el-input>
       <el-table :data="drugData" :stripe="true">
         <el-table-column type="index" align="center"></el-table-column>
@@ -71,36 +74,10 @@
           page_size: 10
         },
         total: 0,
-        patientInfo: {
-          patient_name: '',
-          birthday: '',
-          patient_age: '',
-          patient_gender: '',
-          address: '',
-          reg_id: ''
-        },
+        patientInfo: {},
         drawer: false,
-        drugData: [{
-          drug_id: 1,
-          drug_name: '药1',
-          drug_specification: '100ml/瓶',
-          num: 0
-        }, {
-          drug_id: 2,
-          drug_name: '药2',
-          drug_specification: '100ml/瓶',
-          num: 0
-        }],
-        diagnosisForm: {
-          patient_id: 0,
-          reg_id: 0,
-          advice: '',
-          condition: '',
-          drug: [{
-            drug_id: 0,
-            drug_num: 0
-          }]
-        },
+        drugData: [],
+        diagnosisForm: {},
         diagnosisRule: {
           advice: [{
             required: true,
@@ -171,6 +148,11 @@
         this.drug_page.page_num = newPage
         this.prescription()
       },
+      drugSearch () {
+        this.drug_page.page_num = 1
+        this.drug_page.page_size = 10
+        this.prescription()
+      },
       async prescription () {
         console.log(this.drug_page)
         const { data: res } = await this.$http.get('doctor/drug-list', { params: this.drug_page })
@@ -182,6 +164,12 @@
       async patientLate () {
         const { data: res } = await this.$http.post('doctor/patient-late', { reg_id: this.diagnosisForm.reg_id })
         console.log(res)
+        this.getPatientInfo()
+      },
+      drawerClose () {
+        this.drug_page.page_num = 1
+        this.drug_page.page_size = 10
+        this.drug_page.drug_search = ''
       }
     }
   }

@@ -12,6 +12,8 @@
     <div class="list" v-infinite-scroll="load" infinite-scroll-disabled="disabled">
       <DoctorList class="doctor" v-for="item in doctor_list" :key="item.doctor_id" :info="item"
                   :remainder="false"></DoctorList>
+    </div>
+    <div class="message">
       <p v-if="loading">加载中...</p>
       <p v-if="at_end && !loading">没有更多了</p>
     </div>
@@ -52,7 +54,9 @@
       async getDoctorList () {
         const { data: res } = await this.$http.get('home/doctor-list', { params: this.browse })
         console.log(res)
-        this.doctor_list.push(...res.data.doctor)
+        if (res.data.doctor.length > 0) {
+          this.doctor_list.push(...res.data.doctor)
+        }
         this.browse.total = res.data.total
         this.at_end = res.data.at_end
       },
@@ -66,7 +70,7 @@
         setTimeout(() => {
           this.getDoctorList()
           this.loading = false
-        }, 3000)
+        }, 1000)
       }
     },
     computed: {
@@ -98,6 +102,18 @@
       width: 45%;
       height: 350px;
       margin: 20px;
+    }
+  }
+
+  .message {
+    display: flex;
+    align-content: flex-end;
+    justify-content: center;
+
+    p {
+      display: flex;
+      justify-content: center;
+      margin: 10px;
     }
   }
 </style>
